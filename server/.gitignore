@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.env
+.env.local
+dist/
+build/
+.DS_Store
+
+# uploads (local dev files)
+uploads/
