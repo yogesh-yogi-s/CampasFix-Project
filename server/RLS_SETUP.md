@@ -30,8 +30,8 @@ After running this, proceed to seed the database.
 2. Under **API Keys**, copy the **service_role** key (the secret key ending with `-new`)
 3. Add it to your `.env` file:
    ```env
-   SUPABASE_URL=https://jxduozjtikqbpgkfwkxe.supabase.co
-   SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp4ZHVvemp0aWtxYnBna2Z3a3hlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NjQzMjYsImV4cCI6MjEwMzM0MDMyNn0.QvzYvlkQhaIfua9iaKnwUGVqvX27iywRS_vrATAU284
+   SUPABASE_URL=your_service_role_key_here
+   SUPABASE_KEY=your_service_role_key_here
    SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
    ```
 4. The seed script will automatically use the service role key if available.
