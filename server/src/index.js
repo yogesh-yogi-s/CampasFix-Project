@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const path = require('path');
+const fs = require('fs');
 const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -35,8 +36,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
 
+// Ensure uploads directory exists (Render/Railway ephemeral disk)
+const uploadDir = path.join(__dirname, '../uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
 // Static uploads serving
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use('/uploads', express.static(uploadDir));
 
 // Health Check
 app.get('/api/health', (req, res) => {
@@ -58,8 +65,9 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = getEnv('PORT', 5000);
-server.listen(PORT, () => {
-  console.log(`CampusFix Server listening on port ${PORT}`);
+const HOST = getEnv('HOST', '0.0.0.0');
+server.listen(PORT, HOST, () => {
+  console.log(`CampusFix Server listening on ${HOST}:${PORT}`);
 });
 
 module.exports = { app, server };

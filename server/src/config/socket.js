@@ -1,11 +1,21 @@
+const { getEnv } = require('./env');
+
 let io;
+
+function getAllowedOrigins() {
+  const clientOrigin = getEnv('CLIENT_ORIGIN', 'http://localhost:3000');
+  return clientOrigin.split(',').map((o) => o.trim()).filter(Boolean);
+}
 
 function initSocket(server) {
   const { Server } = require('socket.io');
+  const allowedOrigins = getAllowedOrigins();
+
   io = new Server(server, {
     cors: {
-      origin: '*',
-      methods: ['GET', 'POST']
+      origin: allowedOrigins.length === 1 ? allowedOrigins[0] : allowedOrigins,
+      methods: ['GET', 'POST'],
+      credentials: true
     }
   });
 

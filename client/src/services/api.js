@@ -1,7 +1,17 @@
 import axios from 'axios';
 
+function getApiBaseUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+  const baseUrl = configuredUrl.replace(/\/$/, '');
+
+  // The Express application mounts all REST endpoints beneath /api. Accepting
+  // either the API URL or just the deployed server URL prevents a production
+  // 404 when the environment variable is configured without that suffix.
+  return baseUrl.endsWith('/api') ? baseUrl : `${baseUrl}/api`;
+}
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api',
+  baseURL: getApiBaseUrl(),
   headers: {
     'Content-Type': 'application/json'
   }
